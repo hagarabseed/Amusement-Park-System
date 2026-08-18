@@ -1,70 +1,49 @@
 package com.example;
 
-public class KidsRide extends Ride{
- private boolean hasParentalSupervision;
-private boolean isIndoor;
-private String rideType;
-private int kidsAge;//
-public KidsRide(String name, int capacity, int ageRequirment, double hightRequirment, int yearsInservice, boolean needMaintenance,
-            boolean available,boolean hasParentalSupervision,boolean isIndoor,String rideType,int kidsAge){
-super(name, capacity, ageRequirment, hightRequirment, yearsInservice, needMaintenance, available);
-this.hasParentalSupervision=hasParentalSupervision;
-this.isIndoor=isIndoor;
-this.rideType=rideType;
-this.kidsAge=kidsAge;
+public class KidsRide extends Ride {
 
-}
-    public boolean isHasParentalSupervision() {
-        return hasParentalSupervision;
-    }
+    private boolean hasParentalSupervision;
+    private boolean isIndoor;
+    private String subType;
 
-    public void setHasParentalSupervision(boolean hasParentalSupervision) {
+    public KidsRide(String name, int capacity, int ageRequirement, double heightRequirement, 
+                    int yearsInService, boolean needMaintenance, boolean available, 
+                    boolean hasParentalSupervision, boolean isIndoor, String subType) {
+        super(name, capacity, ageRequirement, heightRequirement, yearsInService, needMaintenance, available);
         this.hasParentalSupervision = hasParentalSupervision;
-    }
-
-    public boolean isIndoor() {
-        return isIndoor;
-    }
-
-    public void setIsIndoor(boolean isIndoor) {
         this.isIndoor = isIndoor;
+        this.subType = subType;
     }
 
-    public String getRideType() {
-        return rideType;
+    public boolean isHasParentalSupervision() { return hasParentalSupervision; }
+    public void setHasParentalSupervision(boolean hasParentalSupervision) { this.hasParentalSupervision = hasParentalSupervision; }
+
+    public boolean isIndoor() { return isIndoor; }
+    public void setIsIndoor(boolean isIndoor) { this.isIndoor = isIndoor; }
+
+    public String getSubType() { return subType; }
+    public void setSubType(String subType) { this.subType = subType; }
+
+    public void checkParentalSupervision(int kidsAge) {
+        if (kidsAge <= 5) {
+            System.out.println("Children under 5 years old must be accompanied by an adult.");
+        }
     }
 
-    public void setRideType(String rideType) {
-        this.rideType = rideType;
-    }
-public void checkParentalSupervision(){
-if(kidsAge<=5)
-        System.out.println("Children under 5 years old must be accompanied by an adult");
-}
     @Override
-    public boolean needReplacement() {
-        return getYearsInservice() >= 55;
-    }
+    public boolean needReplacement() { return getYearsInService() >= 55; }
 
     @Override
     public void startRide() {
-      System.out.println("The kidsRide starting!");
+        System.out.println("The Kids Ride '" + getName() + "' is starting!");
     }
 
     @Override
-    public void displayInfo() {
-         System.out.println("Ride name: " + getName());
-        System.out.println("Capacity: " + getCapacity());
-        System.out.println("the Age Requirement: " + getAgeRequirment());
-        System.out.println("the Height Requirement: " + getHightRequirment());
-        System.out.println(" the Years in Service: " + getYearsInservice());
-         System.out.println(" the Years in Service: " + getYearsInservice());
-        System.out.println("Needs Maintenance: " + isNeedMaintenance());
-        System.out.println("Available: " + isAvailable());
-    System.out.println("Parental Supervision Required: " + isHasParentalSupervision());
-System.out.println("Indoor Ride: " + isIndoor());
-System.out.println("Ride Type: " + getRideType());
-}
-    }
-    
+    public String getRideCategory() { return "Kids Ride"; }
 
+    @Override
+    public String getSpecificDetails() {
+        return String.format("Type: %s | Indoor: %s | Supervision: %s", 
+                subType, isIndoor ? "Yes" : "No", hasParentalSupervision ? "Required" : "Optional");
+    }
+}

@@ -3,78 +3,50 @@ package com.example;
 public class RollarCoaster extends Ride {
 
     private double maxSpeed;
-    private double trackLenght;
-    private int numberOfloops;
-    private boolean hasaPhotoPoint;
+    private double trackLength;
+    private int numberOfLoops;
+    private boolean hasPhotoPoint;
 
-    public RollarCoaster(String name, int capacity, int ageRequirment, double hightRequirment, int yearsInservice, boolean needMaintenance,
-            boolean available, double maxSpeed, double trackLenght, int numberOfloops, boolean hasaPhotoPoint) {
-        super(name, capacity, ageRequirment, hightRequirment, yearsInservice, needMaintenance, available);
+    public RollarCoaster(String name, int capacity, int ageRequirement, double heightRequirement, 
+                         int yearsInService, boolean needMaintenance, boolean available, 
+                         double maxSpeed, double trackLength, int numberOfLoops, boolean hasPhotoPoint) {
+        super(name, capacity, ageRequirement, heightRequirement, yearsInService, needMaintenance, available);
         this.maxSpeed = maxSpeed;
-        this.trackLenght = trackLenght;
-        this.numberOfloops = numberOfloops;
-        this.hasaPhotoPoint = hasaPhotoPoint;
+        this.trackLength = trackLength;
+        this.numberOfLoops = numberOfLoops;
+        this.hasPhotoPoint = hasPhotoPoint;
     }
 
-    public double getMaxSpeed() {
-        return maxSpeed;
-    }
+    public double getMaxSpeed() { return maxSpeed; }
+    public void setMaxSpeed(double maxSpeed) { this.maxSpeed = maxSpeed; }
 
-    public void setMaxSpeed(double maxSpeed) {
-        this.maxSpeed = maxSpeed;
-    }
+    public double getTrackLength() { return trackLength; }
+    public void setTrackLength(double trackLength) { this.trackLength = trackLength; }
 
-    public double getTrackLenght() {
-        return trackLenght;
-    }
+    public int getNumberOfLoops() { return numberOfLoops; }
+    public void setNumberOfLoops(int numberOfLoops) { this.numberOfLoops = numberOfLoops; }
 
-    public void setTrackLenght(double trackLenght) {
-        this.trackLenght = trackLenght;
-    }
-
-    public int getNumberOfloops() {
-        return numberOfloops;
-    }
-
-    public void setNumberOfloops(int numberOfloops) {
-        this.numberOfloops = numberOfloops;
-    }
-
-    public boolean isHasaPhotoPoint() {
-        return hasaPhotoPoint;
-    }
-
-    public void setHasaPhotoPoint(boolean hasaPhotoPoint) {
-        this.hasaPhotoPoint = hasaPhotoPoint;
-    }
+    public boolean isHasPhotoPoint() { return hasPhotoPoint; }
+    public void setHasPhotoPoint(boolean hasPhotoPoint) { this.hasPhotoPoint = hasPhotoPoint; }
 
     public double calculateRideTime() {
-        return trackLenght / maxSpeed;
+        return maxSpeed > 0 ? trackLength / maxSpeed : 0;
     }
 
     @Override
-    public boolean needReplacement() {
-        return getYearsInservice() >= 40;
-    }
+    public boolean needReplacement() { return getYearsInService() >= 40; }
 
     @Override
     public void startRide() {
-        System.out.println("The Rollar Coaster  starting!");
+        System.out.println("The Roller Coaster '" + getName() + "' is starting!");
     }
 
     @Override
-    public void displayInfo() {
-        System.out.println("Ride name: " + getName());
-        System.out.println("Capacity: " + getCapacity());
-        System.out.println("the Age Requirement: " + getAgeRequirment());
-        System.out.println("the Height Requirement: " + getHightRequirment());
-        System.out.println(" the Years in Service: " + getYearsInservice());
-        System.out.println("Needs Maintenance: " + isNeedMaintenance());
-    System.out.println("Available: " + isAvailable());
-        System.out.println(" maxSpeed: " + getMaxSpeed());
-        System.out.println("trackLenght: " + getTrackLenght());
-        System.out.println("numberOfloops: " + getNumberOfloops());
-        System.out.println(" Is this Rollar Coaster has hasaPhotoPoint: " +isHasaPhotoPoint());
-    }
+    public String getRideCategory() { return "Roller Coaster"; }
 
+    @Override
+    public String getSpecificDetails() {
+        return String.format("Speed: %.1f km/h | Loops: %d | Photo: %s", 
+                maxSpeed, numberOfLoops, hasPhotoPoint ? "Yes" : "No");
+    }
 }

@@ -17,11 +17,17 @@ public class Main {
         park.addOffer(new Offer(1, "Summer Discount", 20));
         park.addOffer(new Offer(2, "VIP Special", 30));
 
+        List<Ride> rides = new ArrayList<>();
+        rides.add(new RollarCoaster("Thunder Coaster", 24, 14, 1.4, 5, false, true, 120.0, 800.0, 3, true));
+        rides.add(new HorrorRide("House of Shock", 12, 16, 1.2, 2, false, true, 9, true));
+        rides.add(new KidsRide("Mini Carousel", 16, 3, 0.8, 1, false, true, true, true, "Merry-Go-Round"));
+        rides.add(new WaterRide("Splash Mountain", 20, 10, 1.1, 4, true, false, 2.5, 15.0, "Flume Ride"));
+
         List<Person> users = new ArrayList<>();
         Customer customer = new Customer(2, "Sara", "sara@gmail.com", "5678", "01111111111", 100);
         users.add(new Person(1, "Menna", "menna@gmail.com", "1234", "01000000000"));
         users.add(customer);
-        users.add(new RideOperator(3, "Ahmed", "ahmed@gmail.com", "1234", "01222222222", 6000.0, "Ride Operator", "Roller Coaster"));
+        users.add(new RideOperator(3, "Ahmed", "ahmed@gmail.com", "1234", "01222222222", 6000.0, "Ride Operator", "Thunder Coaster"));
         users.add(new Manager(4, "Omar", "omar@gmail.com", "1234", "01133333333", 10000.0, "Manager", "Full Access"));
         users.add(new Cashier(5, "Khaled", "khaled@gmail.com", "9999", "01555555555", 5000.0, "Cashier", 42));
 
@@ -36,16 +42,17 @@ public class Main {
             System.out.println("                 Amusement Park Management System                       ");
             System.out.println("========================================================================");
             System.out.println("1. View System Users Directory");
-            System.out.println("2. View Food Court Menu & Offers");
-            System.out.println("3. Create New Ticket Booking");
-            System.out.println("4. View Current Booking Summary");
-            System.out.println("5. Checkout & Process Payment");
-            System.out.println("6. Test User Login");
-            System.out.println("7. Exit");
-            System.out.print("Choose an option: ");
+            System.out.println("2. View Park Rides Directory");
+            System.out.println("3. View Food Court Menu & Offers");
+            System.out.println("4. Create New Ticket Booking");
+            System.out.println("5. View Current Booking Summary");
+            System.out.println("6. Checkout & Process Payment");
+            System.out.println("7. Test User Login");
+            System.out.println("8. Exit");
+            System.out.print("Choose an option (1-8): ");
 
             if (!scanner.hasNextInt()) {
-                System.out.println("Invalid input! Please enter a number between 1 and 7.");
+                System.out.println("Invalid input! Please enter a number between 1 and 8.");
                 scanner.next(); 
                 continue;
             }
@@ -58,11 +65,15 @@ public class Main {
                     break;
 
                 case 2:
+                    RideView.printRideTable(rides);
+                    break;
+
+                case 3:
                     park.displayFoodItems();
                     park.displayOffers();
                     break;
 
-                case 3:
+                case 4:
                     System.out.println("\n--- Creating New Booking for " + customer.getName() + " ---");
                     int tChoice = -1;
 
@@ -75,10 +86,10 @@ public class Main {
                         if (scanner.hasNextInt()) {
                             tChoice = scanner.nextInt();
                             if (tChoice >= 1 && tChoice <= 3) {
-                                break; 
+                                break;
                             }
                         } else {
-                            scanner.next(); 
+                            scanner.next();
                         }
                         System.out.println("Invalid ticket selection! Please try again.\n");
                     }
@@ -97,15 +108,15 @@ public class Main {
                     System.out.println("-> Ticket added successfully to Booking #" + activeBooking.getBookingId());
                     break;
 
-                case 4:
+                case 5:
                     if (activeBooking == null) {
-                        System.out.println("-> No active booking found! Please create a booking first (Option 3).");
+                        System.out.println("-> No active booking found! Please create a booking first (Option 4).");
                     } else {
                         activeBooking.displayBookingSummary();
                     }
                     break;
 
-                case 5:
+                case 6:
                     if (activeBooking == null || activeBooking.getTickets().isEmpty()) {
                         System.out.println("-> Cannot process payment: No active booking found or empty tickets.");
                         break;
@@ -133,7 +144,7 @@ public class Main {
                             method = "Vodafone Cash";
                             break;
                         } else {
-                            System.out.println("Invalid Payment Method! Please choose from (Credit Card, Cash, Vodafone Cash) or enter numbers (1-3). Try again.");
+                            System.out.println("Invalid Payment Method! Choose from (Credit Card, Cash, Vodafone Cash) or numbers (1-3). Try again.");
                         }
                     }
 
@@ -144,11 +155,11 @@ public class Main {
                     }
                     break;
 
-                case 6:
+                case 7:
                     boolean loggedIn = false;
 
                     while (!loggedIn) {
-                        scanner.nextLine(); // clear buffer
+                        scanner.nextLine(); 
                         System.out.print("Enter Email: ");
                         String email = scanner.nextLine().trim();
                         System.out.print("Enter Password: ");
@@ -168,13 +179,13 @@ public class Main {
                     }
                     break;
 
-                case 7:
+                case 8:
                     exit = true;
                     System.out.println("Exiting System... Thank you!");
                     break;
 
                 default:
-                    System.out.println("Invalid choice! Please enter a number between 1 and 7.");
+                    System.out.println("Invalid choice! Please enter a number between 1 and 8.");
             }
         }
 
