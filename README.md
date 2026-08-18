@@ -118,11 +118,11 @@ git clone https://github.com/hagarabseed/Amusement-Park-System.git
 cd amusement-park-management
 
 #### Compile the Project:
-javac -d bin src/com/example/*.java
+- javac -d bin src/com/example/*.java
 
 #### Run the Application:
-java -cp bin com.example.Main
+- java -cp bin com.example.Main
 
 
 ## Acknowledgments
-    Special thanks to Dr.Mina for his guidance and continuous support throughout the Software Testing Track, and to the Digital Egypt Pioneers Initiative (DEPI) for providing this learning opportunity.
+- Special thanks to Dr.Mina for his guidance and continuous support throughout the Software Testing Track, and to the Digital Egypt Pioneers Initiative (DEPI) for providing this learning opportunity.
