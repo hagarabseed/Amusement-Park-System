@@ -102,28 +102,27 @@ com.example
 └── Presentation Views
     ├── UserView.java             # Tabular User directory rendering & masking
     └── RideView.java             # Tabular Ride directory rendering
+```
+---
 
-Getting Started
+## Getting Started
 
-Prerequisites:
+### Prerequisites:
 - Java Development Kit (JDK): Version 8 or higher installed.
 - IDE: IntelliJ IDEA, Eclipse, NetBeans, or VS Code.
 
-Installation & Execution
+### Installation & Execution
 
-Clone the Repository:
-(Bash)
+#### Clone the Repository:
 git clone https://github.com/hagarabseed/Amusement-Park-System.git
 cd amusement-park-management
 
-Compile the Project:
-(Bash)
+#### Compile the Project:
 javac -d bin src/com/example/*.java
 
-Run the Application:
-(Bash)
+#### Run the Application:
 java -cp bin com.example.Main
 
 
-->Acknowledgments
+## Acknowledgments
     Special thanks to Dr.Mina for his guidance and continuous support throughout the Software Testing Track, and to the Digital Egypt Pioneers Initiative (DEPI) for providing this learning opportunity.
