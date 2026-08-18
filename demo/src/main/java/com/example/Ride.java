@@ -1,7 +1,6 @@
 package com.example;
 
-public abstract class Ride {
-
+public abstract class Ride implements Maintainable {
     private String name;
     private int capacity;
     private int ageRequirement;
@@ -9,10 +8,6 @@ public abstract class Ride {
     private int yearsInService;
     private boolean needMaintenance;
     private boolean available;
-
-    public Ride() {
-        this("", 0, 0, 0.0, 0, false, false);
-    }
 
     public Ride(String name, int capacity, int ageRequirement, double heightRequirement, 
                 int yearsInService, boolean needMaintenance, boolean available) {
@@ -26,34 +21,30 @@ public abstract class Ride {
     }
 
     public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
+    
     public int getCapacity() { return capacity; }
-    public void setCapacity(int capacity) { this.capacity = capacity; }
-
+   
     public int getAgeRequirement() { return ageRequirement; }
-    public void setAgeRequirement(int ageRequirement) { this.ageRequirement = ageRequirement; }
-
+   
     public double getHeightRequirement() { return heightRequirement; }
-    public void setHeightRequirement(double heightRequirement) { this.heightRequirement = heightRequirement; }
-
+   
     public int getYearsInService() { return yearsInService; }
-    public void setYearsInService(int yearsInService) { this.yearsInService = yearsInService; }
-
+   
     public boolean isNeedMaintenance() { return needMaintenance; }
     public void setNeedsMaintenance(boolean needMaintenance) { this.needMaintenance = needMaintenance; }
-
+    
     public boolean isAvailable() { return available; }
     public void setAvailable(boolean available) { this.available = available; }
 
-    public boolean isAllowed(int age, double height) {
-        return age >= ageRequirement && height >= heightRequirement;
+    @Override
+    public void performMaintenance() {
+        System.out.println("-> Performing full maintenance check on ride: " + name);
+        this.needMaintenance = false;
     }
 
-    public void checkMaintenance() {
-        if (needMaintenance) {
-            System.out.println("Warning: Ride '" + name + "' needs maintenance!");
-        }
+    @Override
+    public boolean needsMaintenanceCheck() {
+        return this.needMaintenance;
     }
 
     public abstract boolean needReplacement();

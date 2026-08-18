@@ -1,6 +1,6 @@
 package com.example;
 
-public abstract class Ticket {
+public abstract class Ticket implements Discountable {
     private int id;
     private double basePrice;
 
@@ -12,12 +12,17 @@ public abstract class Ticket {
     public int getId() { return id; }
     public double getBasePrice() { return basePrice; }
 
+    @Override
+    public double applyDiscount(double percentage) {
+        double price = calculatePrice();
+        return price - (price * (percentage / 100.0));
+    }
+
     public abstract String getTicketType();
     public abstract double calculatePrice();
     public abstract String getBenefits();
 
     public void displayInfo() {
-        System.out.printf("%-5d | %-15s | $%-10.2f | %s%n", 
-                id, getTicketType(), calculatePrice(), getBenefits());
+        System.out.printf("%-5d | %-15s | $%-10.2f | %s%n", id, getTicketType(), calculatePrice(), getBenefits());
     }
 }

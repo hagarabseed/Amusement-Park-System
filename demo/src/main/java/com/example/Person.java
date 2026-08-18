@@ -13,7 +13,7 @@ public class Person {
         this.email = email;
         this.password = password;
         this.phone = phone;
-  }
+    }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -22,7 +22,7 @@ public class Person {
     public void setName(String name) { this.name = name; }
 
     public String getEmail() { return email; }
-     public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) { this.email = email; }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
@@ -31,15 +31,13 @@ public class Person {
     public void setPhone(String phone) { this.phone = phone; }
 
     public boolean login(String email, String password) {
-        return this.email.equals(email) && this.password.equals(password);
+        return this.email.equalsIgnoreCase(email) && this.password.equals(password);
     }
 
     public void logout() {
-    System.out.println(name + " logged out.");
+        System.out.println(name + " logged out.");
     }
 
     public String getRole() { return "User"; }
-
     public String getSpecificDetails() { return "N/A"; }
-
-   }
+}

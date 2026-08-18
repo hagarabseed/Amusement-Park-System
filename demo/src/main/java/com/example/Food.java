@@ -8,13 +8,9 @@ public class Food extends FoodItem {
         this.category = category;
     }
 
-    public String getCategory() { return category; }
-
     @Override
     public String getType() { return "Food"; }
 
     @Override
-    public String getSpecificDetails() {
-        return "Category: " + category;
-    }
+    public String getSpecificDetails() { return "Category: " + category; }
 }

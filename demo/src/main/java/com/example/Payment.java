@@ -3,31 +3,32 @@ package com.example;
 public class Payment {
     private int paymentId;
     private Booking booking;
-    private String paymentMethod;
-    private boolean status;
+    private PaymentProcessor paymentProcessor;
+    private boolean status = false;
 
-    public Payment(int paymentId, Booking booking, String paymentMethod) {
+    public Payment(int paymentId, Booking booking, PaymentProcessor paymentProcessor) {
         this.paymentId = paymentId;
         this.booking = booking;
-        this.paymentMethod = paymentMethod;
-        this.status = false;
+        this.paymentProcessor = paymentProcessor;
     }
 
     public boolean processPayment() {
-        if (booking.getTickets().isEmpty()) {
+        if (booking == null || booking.getTickets().isEmpty()) {
             System.out.println("-> Payment Failed: Booking has no tickets.");
             return false;
         }
 
-        this.status = true;
-        booking.setPaid(true);
+        double total = booking.calculateTotalAmount();
+        this.status = paymentProcessor.process(total);
 
-        int pointsEarned = (int) (booking.calculateTotalAmount() / 10);
-        booking.getCustomer().addLoyaltyPoints(pointsEarned);
+        if (this.status) {
+            booking.setPaid(true);
+            int pointsEarned = (int) (total / 10);
+            booking.getCustomer().addLoyaltyPoints(pointsEarned);
+            System.out.println("-> " + pointsEarned + " Loyalty Points added to " + booking.getCustomer().getName() + ".");
+        }
 
-        System.out.println("-> Payment Processed Successfully via " + paymentMethod + "!");
-        System.out.println("-> " + pointsEarned + " Loyalty Points added to " + booking.getCustomer().getName() + ".");
-        return true;
+        return this.status;
     }
 
     public void printReceipt() {
@@ -40,7 +41,7 @@ public class Payment {
         System.out.println("Payment ID    : PAY-" + paymentId);
         System.out.println("Booking ID    : #" + booking.getBookingId());
         System.out.println("Customer      : " + booking.getCustomer().getName());
-        System.out.println("Payment Method: " + paymentMethod);
+        System.out.println("Payment Method: " + paymentProcessor.getMethodName());
         System.out.printf("Amount Paid   : $%.2f%n", booking.calculateTotalAmount());
         System.out.println("Status        : SUCCESS");
         System.out.println("===========================================================================================");

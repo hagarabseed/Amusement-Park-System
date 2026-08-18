@@ -1,7 +1,6 @@
 package com.example;
 
-public abstract class FoodItem {
-
+public abstract class FoodItem implements Discountable {
     private int id;
     private String name;
     private double price;
@@ -13,17 +12,18 @@ public abstract class FoodItem {
     }
 
     public int getId() { return id; }
-
     public String getName() { return name; }
-
     public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
+
+    @Override
+    public double applyDiscount(double percentage) {
+        return price - (price * (percentage / 100.0));
+    }
 
     public abstract String getType();
     public abstract String getSpecificDetails();
 
     public void displayInfo() {
-        System.out.printf("%-5d | %-15s | $%-8.2f | %-10s | %s%n", 
-                id, name, price, getType(), getSpecificDetails());
+        System.out.printf("%-5d | %-15s | $%-8.2f | %-10s | %s%n", id, name, price, getType(), getSpecificDetails());
     }
 }

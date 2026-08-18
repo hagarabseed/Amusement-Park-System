@@ -1,7 +1,5 @@
 package com.example;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -10,6 +8,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         AmusementPark park = new AmusementPark("Dream Park");
+
         park.addFoodItem(new Food(1, "Burger", 150, "Fast Food"));
         park.addFoodItem(new Food(2, "Pizza", 200, "Italian"));
         park.addFoodItem(new Drink(3, "Cola", 50, "Large"));
@@ -17,19 +16,17 @@ public class Main {
         park.addOffer(new Offer(1, "Summer Discount", 20));
         park.addOffer(new Offer(2, "VIP Special", 30));
 
-        List<Ride> rides = new ArrayList<>();
-        rides.add(new RollarCoaster("Thunder Coaster", 24, 14, 1.4, 5, false, true, 120.0, 800.0, 3, true));
-        rides.add(new HorrorRide("House of Shock", 12, 16, 1.2, 2, false, true, 9, true));
-        rides.add(new KidsRide("Mini Carousel", 16, 3, 0.8, 1, false, true, true, true, "Merry-Go-Round"));
-        rides.add(new WaterRide("Splash Mountain", 20, 10, 1.1, 4, true, false, 2.5, 15.0, "Flume Ride"));
+        park.addRide(new RollarCoaster("Thunder Coaster", 24, 14, 1.4, 5, false, true, 120.0, 800.0, 3, true));
+        park.addRide(new HorrorRide("House of Shock", 12, 16, 1.2, 2, false, true, 9, true));
+        park.addRide(new KidsRide("Mini Carousel", 16, 3, 0.8, 1, false, true, true, true, "Merry-Go-Round"));
+        park.addRide(new WaterRide("Splash Mountain", 20, 10, 1.1, 4, true, false, 2.5, 15.0, "Flume Ride"));
 
-        List<Person> users = new ArrayList<>();
-        Customer customer = new Customer(2, "Sara", "sara@gmail.com", "5678", "01111111111", 100);
-        users.add(new Person(1, "Menna", "menna@gmail.com", "1234", "01000000000"));
-        users.add(customer);
-        users.add(new RideOperator(3, "Ahmed", "ahmed@gmail.com", "1234", "01222222222", 6000.0, "Ride Operator", "Thunder Coaster"));
-        users.add(new Manager(4, "Omar", "omar@gmail.com", "1234", "01133333333", 10000.0, "Manager", "Full Access"));
-        users.add(new Cashier(5, "Khaled", "khaled@gmail.com", "9999", "01555555555", 5000.0, "Cashier", 42));
+        Customer defaultCustomer = new Customer(2, "Sara", "sara@gmail.com", "5678", "01111111111", 100);
+        park.addUser(new Person(1, "Menna", "menna@gmail.com", "1234", "01000000000"));
+        park.addUser(defaultCustomer);
+        park.addUser(new RideOperator(3, "Ahmed", "ahmed@gmail.com", "1234", "01222222222", 6000.0, "Ride Operator", "Thunder Coaster"));
+        park.addUser(new Manager(4, "Omar", "omar@gmail.com", "1234", "01133333333", 10000.0, "Manager", "Full Access"));
+        park.addUser(new Cashier(5, "Khaled", "khaled@gmail.com", "9999", "01555555555", 5000.0, "Cashier", 42));
 
         Booking activeBooking = null;
         int bookingCounter = 100;
@@ -53,7 +50,7 @@ public class Main {
 
             if (!scanner.hasNextInt()) {
                 System.out.println("Invalid input! Please enter a number between 1 and 8.");
-                scanner.next(); 
+                scanner.next();
                 continue;
             }
 
@@ -61,11 +58,11 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    UserView.printUserTable(users);
+                    UserView.printUserTable(park.getUsers());
                     break;
 
                 case 2:
-                    RideView.printRideTable(rides);
+                    RideView.printRideTable(park.getRides());
                     break;
 
                 case 3:
@@ -74,7 +71,7 @@ public class Main {
                     break;
 
                 case 4:
-                    System.out.println("\n--- Creating New Booking for " + customer.getName() + " ---");
+                    System.out.println("\n--- Creating New Booking for " + defaultCustomer.getName() + " ---");
                     int tChoice = -1;
 
                     while (true) {
@@ -85,9 +82,7 @@ public class Main {
 
                         if (scanner.hasNextInt()) {
                             tChoice = scanner.nextInt();
-                            if (tChoice >= 1 && tChoice <= 3) {
-                                break;
-                            }
+                            if (tChoice >= 1 && tChoice <= 3) break;
                         } else {
                             scanner.next();
                         }
@@ -95,25 +90,18 @@ public class Main {
                     }
 
                     bookingCounter++;
-                    activeBooking = new Booking(bookingCounter, customer);
+                    activeBooking = new Booking(bookingCounter, defaultCustomer);
 
-                    if (tChoice == 1) {
-                        activeBooking.addTicket(new RegularTicket(101, 50.0));
-                    } else if (tChoice == 2) {
-                        activeBooking.addTicket(new VIPTicket(102, 50.0, true));
-                    } else if (tChoice == 3) {
-                        activeBooking.addTicket(new FamilyTicket(103, 50.0, 4));
-                    }
-                    
+                    if (tChoice == 1) activeBooking.addTicket(new RegularTicket(101, 50.0));
+                    else if (tChoice == 2) activeBooking.addTicket(new VIPTicket(102, 50.0, true));
+                    else if (tChoice == 3) activeBooking.addTicket(new FamilyTicket(103, 50.0, 4));
+
                     System.out.println("-> Ticket added successfully to Booking #" + activeBooking.getBookingId());
                     break;
 
                 case 5:
-                    if (activeBooking == null) {
-                        System.out.println("-> No active booking found! Please create a booking first (Option 4).");
-                    } else {
-                        activeBooking.displayBookingSummary();
-                    }
+                    if (activeBooking == null) System.out.println("-> No active booking found! Create one first (Option 4).");
+                    else activeBooking.displayBookingSummary();
                     break;
 
                 case 6:
@@ -126,30 +114,34 @@ public class Main {
                         break;
                     }
 
-                    scanner.nextLine(); 
-                    String method = "";
+                    scanner.nextLine();
+                    PaymentProcessor processor = null;
 
                     while (true) {
                         System.out.println("\nAvailable Payment Methods: [1] Credit Card  |  [2] Cash  |  [3] Vodafone Cash");
-                        System.out.print("Enter Payment Method (Name or Number 1-3): ");
+                        System.out.print("Enter Payment Method (1-3): ");
                         String input = scanner.nextLine().trim();
 
-                        if (input.equalsIgnoreCase("Credit Card") || input.equals("1")) {
-                            method = "Credit Card";
+                        if (input.equals("1") || input.equalsIgnoreCase("Credit Card")) {
+                            System.out.print("Enter Card Number: ");
+                            String cardNum = scanner.nextLine().trim();
+                            processor = new CreditCardPayment(cardNum);
                             break;
-                        } else if (input.equalsIgnoreCase("Cash") || input.equals("2")) {
-                            method = "Cash";
+                        } else if (input.equals("2") || input.equalsIgnoreCase("Cash")) {
+                            processor = new CashPayment();
                             break;
-                        } else if (input.equalsIgnoreCase("Vodafone Cash") || input.equalsIgnoreCase("Vodafone") || input.equals("3")) {
-                            method = "Vodafone Cash";
+                        } else if (input.equals("3") || input.equalsIgnoreCase("Vodafone Cash")) {
+                            System.out.print("Enter Vodafone Cash Phone Number: ");
+                            String phoneNum = scanner.nextLine().trim();
+                            processor = new VodafoneCashPayment(phoneNum);
                             break;
                         } else {
-                            System.out.println("Invalid Payment Method! Choose from (Credit Card, Cash, Vodafone Cash) or numbers (1-3). Try again.");
+                            System.out.println("Invalid Payment Method! Please enter numbers (1-3) or valid names. Try again.");
                         }
                     }
 
                     paymentCounter++;
-                    Payment payment = new Payment(paymentCounter, activeBooking, method);
+                    Payment payment = new Payment(paymentCounter, activeBooking, processor);
                     if (payment.processPayment()) {
                         payment.printReceipt();
                     }
@@ -159,13 +151,13 @@ public class Main {
                     boolean loggedIn = false;
 
                     while (!loggedIn) {
-                        scanner.nextLine(); 
+                        scanner.nextLine();
                         System.out.print("Enter Email: ");
                         String email = scanner.nextLine().trim();
                         System.out.print("Enter Password: ");
                         String password = scanner.nextLine().trim();
 
-                        for (Person u : users) {
+                        for (Person u : park.getUsers()) {
                             if (u.login(email, password)) {
                                 System.out.println("-> Welcome back, " + u.getName() + "! Login Successful as " + u.getRole() + ".");
                                 loggedIn = true;

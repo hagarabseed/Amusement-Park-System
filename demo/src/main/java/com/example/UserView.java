@@ -22,12 +22,7 @@ public class UserView {
         System.out.println("--------------------------------------------------------------------------------------------------------");
         for (Person u : users) {
             System.out.printf("%-5d | %-12s | %-20s | %-12s | %-15s | %s%n",
-                    u.getId(),
-                    u.getName(),
-                    maskEmail(u.getEmail()),
-                    maskPhone(u.getPhone()),
-                    u.getRole(),
-                    u.getSpecificDetails());
+                    u.getId(), u.getName(), maskEmail(u.getEmail()), maskPhone(u.getPhone()), u.getRole(), u.getSpecificDetails());
         }
         System.out.println("--------------------------------------------------------------------------------------------------------");
     }

@@ -3,7 +3,7 @@ package com.example;
 public class Customer extends Person {
     private int loyaltyPoints;
 
-    public Customer(int id, String name, String email, String password, String phone,int loyaltyPoints) {
+    public Customer(int id, String name, String email, String password, String phone, int loyaltyPoints) {
         super(id, name, email, password, phone);
         this.loyaltyPoints = loyaltyPoints;
     }
@@ -11,8 +11,7 @@ public class Customer extends Person {
     public int getLoyaltyPoints() { return loyaltyPoints; }
     public void setLoyaltyPoints(int loyaltyPoints) { this.loyaltyPoints = loyaltyPoints; }
 
-
-    public void addLoyaltyPoints(int points) { loyaltyPoints += points; }
+    public void addLoyaltyPoints(int points) { this.loyaltyPoints += points; }
 
     @Override
     public String getRole() { return "Customer"; }

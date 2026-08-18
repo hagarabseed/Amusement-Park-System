@@ -12,7 +12,7 @@ public class Employees extends Person {
 
     public double getSalary() { return salary; }
     public void setSalary(double salary) { this.salary = salary; }
-    
+
     public String getPosition() { return position; }
     public void setPosition(String position) { this.position = position; }
 
@@ -20,7 +20,5 @@ public class Employees extends Person {
     public String getRole() { return position; }
 
     @Override
-    public String getSpecificDetails() {
-        return String.format("Salary: $%.2f", salary);
-     }
+    public String getSpecificDetails() { return String.format("Salary: $%.2f", salary); }
 }
