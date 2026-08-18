@@ -31,7 +31,7 @@ public abstract class Ride implements Maintainable {
     public int getYearsInService() { return yearsInService; }
    
     public boolean isNeedMaintenance() { return needMaintenance; }
-    public void setNeedsMaintenance(boolean needMaintenance) { this.needMaintenance = needMaintenance; }
+    public void setNeedMaintenance(boolean needMaintenance) { this.needMaintenance = needMaintenance; }
     
     public boolean isAvailable() { return available; }
     public void setAvailable(boolean available) { this.available = available; }
