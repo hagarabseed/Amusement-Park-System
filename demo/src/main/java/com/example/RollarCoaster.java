@@ -2,16 +2,14 @@ package com.example;
 
 public class RollarCoaster extends Ride {
     private double maxSpeed;
-    private double trackLength;
     private int numberOfLoops;
     private boolean hasPhotoPoint;
 
     public RollarCoaster(String name, int capacity, int ageRequirement, double heightRequirement, 
                          int yearsInService, boolean needMaintenance, boolean available, 
-                         double maxSpeed, double trackLength, int numberOfLoops, boolean hasPhotoPoint) {
+                         double maxSpeed, int numberOfLoops, boolean hasPhotoPoint) {
         super(name, capacity, ageRequirement, heightRequirement, yearsInService, needMaintenance, available);
         this.maxSpeed = maxSpeed;
-        this.trackLength = trackLength;
         this.numberOfLoops = numberOfLoops;
         this.hasPhotoPoint = hasPhotoPoint;
     }

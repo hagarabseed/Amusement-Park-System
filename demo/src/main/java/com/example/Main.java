@@ -16,7 +16,7 @@ public class Main {
         park.addOffer(new Offer(1, "Summer Discount", 20));
         park.addOffer(new Offer(2, "VIP Special", 30));
 
-        park.addRide(new RollarCoaster("Thunder Coaster", 24, 14, 1.4, 5, false, true, 120.0, 800.0, 3, true));
+        park.addRide(new RollarCoaster("Thunder Coaster", 24, 14, 1.4, 5, false, true, 800.0, 3, true));
         park.addRide(new HorrorRide("House of Shock", 12, 16, 1.2, 2, false, true, 9, true));
         park.addRide(new KidsRide("Mini Carousel", 16, 3, 0.8, 1, false, true, true, true, "Merry-Go-Round"));
         park.addRide(new WaterRide("Splash Mountain", 20, 10, 1.1, 4, true, false, 2.5, 15.0, "Flume Ride"));
