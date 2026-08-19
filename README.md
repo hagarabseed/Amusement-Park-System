@@ -103,6 +103,40 @@ com.example
     ├── UserView.java             # Tabular User directory rendering & masking
     └── RideView.java             # Tabular Ride directory rendering
 ```
+
+---
+
+## Latest Updates & New Features
+
+### Active Customer POS Integration
+* Added a dynamic customer selection dropdown (`JComboBox`) in both the Ticketing POS and Food Court consoles.
+* Transactions, wristband top-ups, and ticket purchases now dynamically deduct/add balance and calculate loyalty points for the chosen visitor.
+
+### RFID Wristband Balance Payments
+* Integrated automated checks for RFID Wristband balances during ticket issuance and food orders.
+* Shows explicit error alerts (`JOptionPane`) if a customer’s wristband has insufficient funds.
+
+### Dynamic "Add New Ride" Form
+* Added a popup dialog form allowing managers/admins to dynamically insert new rides into the system.
+* Custom rides instantly appear in the live operations table with customized parameters (Category, Minimum Age, Height, and Capacity).
+
+### Real-Time Live Search & Filtering
+* Implemented live table filtering across **Customer Management**, **Rides Console**, and **Staff Duty** tables using `TableRowSorter`.
+* Tables automatically filter rows in real-time as you type in the search bar.
+
+### Staff Shift & Station Management
+* Added quick-action controls to toggle staff status between `ON DUTY` and `OFF DUTY`.
+* Enabled station/ride assignment updates directly from the staff management table.
+
+### Financial Report Export (`.txt`)
+* Added a dedicated **"Export Report"** button in the Reports & Analytics tab.
+* Exports all real-time financial metrics, food/ticket revenue split, and park capacity stats directly to a local text file (`DreamPark_Financial_Report.txt`).
+
+### Comprehensive Input Validation & Error Handling
+* **Format Checks:** Validates email syntax (`@` and `.`) and restricts phone numbers to numeric values.
+* **Numeric Safeguards:** Catches `NumberFormatException` on prices, capacity, height, and age to prevent negative or non-numeric inputs.
+* **Selection Guards:** Displays proactive warnings if an action button is pressed without selecting a table record first.
+
 ---
 
 ## Getting Started
