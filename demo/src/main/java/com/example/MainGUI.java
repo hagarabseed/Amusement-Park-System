@@ -22,8 +22,8 @@ import java.util.Map;
 
 public class MainGUI extends JFrame {
 
-    private AmusementPark park;
-    private Customer activeCustomer;
+    private y_AmusementPark park;
+    private m_Customer activeCustomer;
     private Map<Integer, Double> customerBalances = new HashMap<>(); // tracking RFID Wristband balances
 
     private double totalRevenue = 1450.00;
@@ -62,9 +62,9 @@ public class MainGUI extends JFrame {
 
     // Custom class to display customers neatly in JComboBox
     private static class CustomerWrapper {
-        private Customer customer;
-        public CustomerWrapper(Customer c) { this.customer = c; }
-        public Customer getCustomer() { return customer; }
+        private m_Customer customer;
+        public CustomerWrapper(m_Customer c) { this.customer = c; }
+        public m_Customer getCustomer() { return customer; }
         @Override
         public String toString() {
             return customer.getId() + " - " + customer.getName() + " (" + customer.getPhone() + ")";
@@ -72,7 +72,7 @@ public class MainGUI extends JFrame {
     }
 
     // Concrete Ride implementation for dynamically created rides
-    private static class CustomRide extends Ride {
+    private static class CustomRide extends s_Ride {
         private String category;
         public CustomRide(String name, int capacity, int ageReq, double heightReq, int years, boolean needMaint, boolean avail, String category) {
             super(name, capacity, ageReq, heightReq, years, needMaint, avail);
@@ -107,25 +107,25 @@ public class MainGUI extends JFrame {
     }
 
     private void initData() {
-        park = new AmusementPark("Dream Park");
+        park = new y_AmusementPark("Dream Park");
 
         // Food & Drinks
-        park.addFoodItem(new Food(1, "Burger Meal", 150, "Fast Food"));
-        park.addFoodItem(new Food(2, "Pizza Combo", 200, "Italian"));
-        park.addFoodItem(new Drink(3, "Fresh Soda", 50, "Large"));
+        park.addFoodItem(new y_Food(1, "Burger Meal", 150, "Fast Food"));
+        park.addFoodItem(new y_Food(2, "Pizza Combo", 200, "Italian"));
+        park.addFoodItem(new y_Drink(3, "Fresh Soda", 50, "Large"));
 
         // Offers
-        park.addOffer(new Offer(1, "Summer Pass", 20));
+        park.addOffer(new y_Offer(1, "Summer Pass", 20));
 
         // Rides
-        park.addRide(new RollarCoaster("Thunder Coaster", 24, 14, 1.4, 5, false, true, 800.0, 3, true));
-        park.addRide(new HorrorRide("House of Shock", 12, 16, 1.2, 2, false, true, 9, true));
-        park.addRide(new KidsRide("Mini Carousel", 16, 3, 0.8, 1, false, true, true, true, "Merry-Go-Round"));
-        park.addRide(new WaterRide("Splash Mountain", 20, 10, 1.1, 4, true, false, 2.5, 15.0, "Flume Ride"));
+        park.addRide(new s_RollarCoaster("Thunder Coaster", 24, 14, 1.4, 5, false, true, 800.0, 3, true));
+        park.addRide(new s_HorrorRide("House of Shock", 12, 16, 1.2, 2, false, true, 9, true));
+        park.addRide(new s_KidsRide("Mini Carousel", 16, 3, 0.8, 1, false, true, true, true, "Merry-Go-Round"));
+        park.addRide(new s_WaterRide("Splash Mountain", 20, 10, 1.1, 4, true, false, 2.5, 15.0, "Flume Ride"));
 
         // Customers & Initial Balances
-        Customer c1 = new Customer(1, "Sara Mahmoud", "sara@gmail.com", "5678", "01111111111", 100);
-        Customer c2 = new Customer(2, "Ahmed Ali", "ahmed.ali@gmail.com", "1234", "01000000000", 50);
+        m_Customer c1 = new m_Customer(1, "Sara Mahmoud", "sara@gmail.com", "5678", "01111111111", 100);
+        m_Customer c2 = new m_Customer(2, "Ahmed Ali", "ahmed.ali@gmail.com", "1234", "01000000000", 50);
 
         park.addUser(c1);
         park.addUser(c2);
@@ -136,9 +136,9 @@ public class MainGUI extends JFrame {
         activeCustomer = c1;
 
         // Staff
-        park.addUser(new RideOperator(3, "Ahmed Hassan", "ahmed@gmail.com", "1234", "01222222222", 6000.0, "Ride Operator", "Thunder Coaster"));
-        park.addUser(new Manager(4, "Omar Ali", "omar@gmail.com", "1234", "01133333333", 10000.0, "Manager", "Full Access"));
-        park.addUser(new Cashier(5, "Khaled Nabil", "khaled@gmail.com", "9999", "01555555555", 5000.0, "Cashier", 42));
+        park.addUser(new m_RideOperator(3, "Ahmed Hassan", "ahmed@gmail.com", "1234", "01222222222", 6000.0, "Ride Operator", "Thunder Coaster"));
+        park.addUser(new m_Manager(4, "Omar Ali", "omar@gmail.com", "1234", "01133333333", 10000.0, "Manager", "Full Access"));
+        park.addUser(new m_Cashier(5, "Khaled Nabil", "khaled@gmail.com", "9999", "01555555555", 5000.0, "Cashier", 42));
     }
 
     private void setupFrame() {
@@ -299,9 +299,9 @@ public class MainGUI extends JFrame {
     private void refreshCustomerComboBoxes() {
         posCustomerCombo.removeAllItems();
         foodCustomerCombo.removeAllItems();
-        for (Person p : park.getUsers()) {
-            if (p instanceof Customer) {
-                CustomerWrapper cw = new CustomerWrapper((Customer) p);
+        for (m_Person p : park.getUsers()) {
+            if (p instanceof m_Customer) {
+                CustomerWrapper cw = new CustomerWrapper((m_Customer) p);
                 posCustomerCombo.addItem(cw);
                 foodCustomerCombo.addItem(cw);
             }
@@ -343,9 +343,9 @@ public class MainGUI extends JFrame {
         long operationalRides = park.getRides().stream().filter(r -> !r.isNeedMaintenance()).count();
 
         statsGrid.add(createStatCard("Total Revenue Today", String.format("$%.2f", totalRevenue), new Color(25, 135, 84)));
-        statsGrid.add(createStatCard("Active Visitors Inside", String.valueOf(park.getUsers().stream().filter(u -> u instanceof Customer).count() * 12), new Color(13, 110, 253)));
+        statsGrid.add(createStatCard("Active Visitors Inside", String.valueOf(park.getUsers().stream().filter(u -> u instanceof m_Customer).count() * 12), new Color(13, 110, 253)));
         statsGrid.add(createStatCard("Operational Rides", operationalRides + " / " + park.getRides().size(), new Color(255, 193, 7)));
-        statsGrid.add(createStatCard("Active Staff On Duty", String.valueOf(park.getUsers().stream().filter(u -> !(u instanceof Customer)).count()), new Color(111, 66, 193)));
+        statsGrid.add(createStatCard("Active Staff On Duty", String.valueOf(park.getUsers().stream().filter(u -> !(u instanceof m_Customer)).count()), new Color(111, 66, 193)));
 
         JTextArea activityArea = new JTextArea();
         activityArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
@@ -488,7 +488,7 @@ public class MainGUI extends JFrame {
             }
 
             int newId = park.getUsers().size() + 1;
-            Customer newCust = new Customer(newId, name, email, "1234", phone, 10); // 10 welcome points
+            m_Customer newCust = new m_Customer(newId, name, email, "1234", phone, 10); // 10 welcome points
             park.addUser(newCust);
             customerBalances.put(newId, deposit);
             activeCustomer = newCust;
@@ -511,9 +511,9 @@ public class MainGUI extends JFrame {
 
     private void refreshCustomerTable() {
         customerTableModel.setRowCount(0);
-        for (Person p : park.getUsers()) {
-            if (p instanceof Customer) {
-                Customer c = (Customer) p;
+        for (m_Person p : park.getUsers()) {
+            if (p instanceof m_Customer) {
+                m_Customer c = (m_Customer) p;
                 double bal = customerBalances.getOrDefault(c.getId(), 0.0);
                 customerTableModel.addRow(new Object[]{
                         c.getId(), c.getName(), c.getEmail(), c.getPhone(), String.format("$%.2f", bal), c.getLoyaltyPoints()
@@ -579,7 +579,7 @@ public class MainGUI extends JFrame {
                 triggerErrorAlert("Please select a customer first!", "Selection Error");
                 return;
             }
-            Customer targetCust = cw.getCustomer();
+            m_Customer targetCust = cw.getCustomer();
             double price = ticketCombo.getSelectedIndex() == 0 ? 50.0 : (ticketCombo.getSelectedIndex() == 1 ? 75.0 : 160.0);
 
             if (chkPayWithWristband.isSelected()) {
@@ -606,7 +606,7 @@ public class MainGUI extends JFrame {
                 triggerErrorAlert("Please select a customer first!", "Selection Error");
                 return;
             }
-            Customer targetCust = cw.getCustomer();
+            m_Customer targetCust = cw.getCustomer();
 
             String amtStr = txtTopup.getText().trim();
             if (amtStr.isEmpty()) {
@@ -695,7 +695,7 @@ public class MainGUI extends JFrame {
             int row = table.getSelectedRow();
             if (row != -1) {
                 int modelRow = table.convertRowIndexToModel(row);
-                Ride r = park.getRides().get(modelRow);
+                s_Ride r = park.getRides().get(modelRow);
                 r.setNeedMaintenance(!r.isNeedMaintenance());
 
                 if (r.isNeedMaintenance()) {
@@ -794,7 +794,7 @@ public class MainGUI extends JFrame {
 
     private void refreshRidesTableData() {
         ridesTableModel.setRowCount(0);
-        for (Ride r : park.getRides()) {
+        for (s_Ride r : park.getRides()) {
             ridesTableModel.addRow(new Object[]{
                     r.getName(), r.getRideCategory(), r.getCapacity(),
                     r.getAgeRequirement() + " yrs", r.getHeightRequirement() + " m",
@@ -885,7 +885,7 @@ public class MainGUI extends JFrame {
                 return;
             }
 
-            Customer c = cw.getCustomer();
+            m_Customer c = cw.getCustomer();
 
             if (chkPayWristbandFood.isSelected()) {
                 double bal = customerBalances.getOrDefault(c.getId(), 0.0);
@@ -1007,8 +1007,8 @@ public class MainGUI extends JFrame {
 
     private void refreshStaffTable() {
         staffTableModel.setRowCount(0);
-        for (Person p : park.getUsers()) {
-            if (!(p instanceof Customer)) {
+        for (m_Person p : park.getUsers()) {
+            if (!(p instanceof m_Customer)) {
                 staffTableModel.addRow(new Object[]{
                         p.getId(), p.getName(), p.getRole(), "Main Park Console", "ON DUTY"
                 });
@@ -1072,7 +1072,7 @@ public class MainGUI extends JFrame {
         sb.append("=========================================================\n\n");
         sb.append(" PARK CAPACITY ANALYTICS:\n");
         sb.append(" - Total Park Capacity : 1,000 Visitors\n");
-        sb.append(" - Registered Customers: ").append(park.getUsers().stream().filter(u -> u instanceof Customer).count()).append("\n");
+        sb.append(" - Registered Customers: ").append(park.getUsers().stream().filter(u -> u instanceof m_Customer).count()).append("\n");
         sb.append(" - Total Rides Count   : ").append(park.getRides().size()).append("\n");
         sb.append(" - Operational Rides   : ").append(park.getRides().stream().filter(r -> !r.isNeedMaintenance()).count()).append("\n");
         return sb.toString();
