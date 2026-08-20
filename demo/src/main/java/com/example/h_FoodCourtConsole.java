@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class FoodCourtConsole {
+public class h_FoodCourtConsole {
     private static List<String> cartItems = new ArrayList<>();
     private static double cartTotal = 0.0;
 
@@ -60,7 +60,7 @@ public class FoodCourtConsole {
 
     private static void selectCustomer(Scanner scanner) {
         System.out.println("\n--- Select Customer ---");
-        CustomerConsole.printCustomerTable();
+        h_CustomerConsole.printCustomerTable();
         System.out.print("Enter Customer ID: ");
         if (!scanner.hasNextInt()) {
             System.out.println("[ERROR] Invalid ID!");

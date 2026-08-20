@@ -42,25 +42,25 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    OverviewConsole.display();
+                    h_OverviewConsole.display();
                     break;
                 case 2:
-                    CustomerConsole.display(scanner);
+                    h_CustomerConsole.display(scanner);
                     break;
                 case 3:
-                    POSConsole.display(scanner);
+                    h_POSConsole.display(scanner);
                     break;
                 case 4:
-                    RidesConsole.display(scanner);
+                    h_RidesConsole.display(scanner);
                     break;
                 case 5:
-                    FoodCourtConsole.display(scanner);
+                    h_FoodCourtConsole.display(scanner);
                     break;
                 case 6:
                     StaffConsole.display(scanner);
                     break;
                 case 7:
-                    ReportsConsole.display(scanner);
+                    h_ReportsConsole.display(scanner);
                     break;
                 case 8:
                     exit = true;

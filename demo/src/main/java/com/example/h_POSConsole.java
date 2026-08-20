@@ -2,7 +2,7 @@ package com.example;
 
 import java.util.Scanner;
 
-public class POSConsole {
+public class h_POSConsole {
     public static void display(Scanner scanner) {
         boolean back = false;
         while (!back) {
@@ -48,7 +48,7 @@ public class POSConsole {
 
     private static void selectCustomer(Scanner scanner) {
         System.out.println("\n--- Select Active Visitor ---");
-        CustomerConsole.printCustomerTable();
+        h_CustomerConsole.printCustomerTable();
         System.out.print("Enter Customer ID to make active: ");
         if (!scanner.hasNextInt()) {
             System.out.println("[ERROR] Invalid input! ID must be a number.");

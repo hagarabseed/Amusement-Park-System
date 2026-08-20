@@ -2,7 +2,7 @@ package com.example;
 
 import java.util.Scanner;
 
-public class RidesConsole {
+public class h_RidesConsole {
     public static void display(Scanner scanner) {
         boolean back = false;
         while (!back) {

@@ -2,7 +2,7 @@ package com.example;
 
 import java.util.Scanner;
 
-public class CustomerConsole {
+public class h_CustomerConsole {
     public static void display(Scanner scanner) {
         boolean back = false;
         while (!back) {
