@@ -1,4 +1,4 @@
-# <p align="center"><img src="parkPulse logo.jpg" alt="ParkPulse Logo" width="50" style="vertical-align:middle; margin-right:10px;"/><span style="font-size:20px; font-weight:bold;">ParkPulse: Amusement Park Management System</span> </p>
+# <p align="center"><img src="parkPulse logo.jpg" alt="ParkPulse Logo" width="100" style="vertical-align:middle; margin-right:10px;"/><span style="font-size:20px; font-weight:bold;">ParkPulse: Amusement Park Management System</span> </p>
 
 
 <p align="center">
@@ -207,6 +207,6 @@ The newly updated CLI completely mirrors the visual and functional sections of t
 * **Hagar Mahmoud**
 * **Menna Habib**
 * **Sarah Yusuf**
-* **Yara Rabie**
+* - **Yara Rabie**
 
 We express our sincere appreciation to our mentor, **Dr. Mina Younan**, for his outstanding supervision, expert feedback, and continuous support throughout the Software Testing Track, and to the **Digital Egypt Pioneers Initiative (DEPI)** for providing this intensive development and QA training path.
