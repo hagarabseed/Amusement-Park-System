@@ -1,4 +1,5 @@
-# <p align="center"><img src="parkPulse logo.jpg" alt="ParkPulse Logo" width="300"/><br> ParkPulse: Amusement Park Management System</p>
+# <p align="center"><img src="parkPulse logo.jpg" alt="ParkPulse Logo" width="50" style="vertical-align:middle; margin-right:10px;"/><span style="font-size:20px; font-weight:bold;">ParkPulse: Amusement Park Management System</span> </p>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/Java-8%2B-blue?style=flat-square&logo=java" alt="Java Version"/>
@@ -14,13 +15,13 @@ Both interfaces share a unified business logic layer and state coordinator, trac
 ---
 
 ## Table of Contents
-1. [Project Overview](#-project-overview)
-2. [Key Features & Architecture](#-key-features--architecture)
-3. [Design Patterns & OOP Principles](#-design-patterns--oop-principles)
-4. [File & Project Structure](#-file--project-structure)
-5. [Unified CLI vs GUI Parity](#-unified-cli-vs-gui-parity)
-6. [Getting Started](#-getting-started)
-7. [Team Members & Acknowledgments](#-team-members--acknowledgments)
+1. [Project Overview](#project-overview)
+2. [Key Features & Architecture](#key-features--architecture)
+3. [Design Patterns & OOP Principles](#design-patterns--oop-principles)
+4. [File & Project Structure](#file--project-structure)
+5. [Unified CLI vs GUI Parity](#unified-cli-vs-gui-parity)
+6. [Getting Started](#getting-started)
+7. [Team Members & Acknowledgments](#team-members--acknowledgments)
 
 ---
 
@@ -203,9 +204,9 @@ The newly updated CLI completely mirrors the visual and functional sections of t
 ## Team Members & Acknowledgments
 
 ### Developed by **Team Mon** (DEPI / Software Testing Track):
-* - **Hagar Mahmoud**
-* - **Menna Habib**
-* - **Sarah Yusuf**
-* - **Yara Rabie**
+* **Hagar Mahmoud**
+* **Menna Habib**
+* **Sarah Yusuf**
+* **Yara Rabie**
 
 We express our sincere appreciation to our mentor, **Dr. Mina Younan**, for his outstanding supervision, expert feedback, and continuous support throughout the Software Testing Track, and to the **Digital Egypt Pioneers Initiative (DEPI)** for providing this intensive development and QA training path.
