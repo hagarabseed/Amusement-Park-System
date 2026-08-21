@@ -20,7 +20,7 @@ public class Main {
 
         while (!exit) {
             System.out.println("\n========================================================================");
-            System.out.println("             🎡 Amusement Park Management System (Dream Park)           ");
+            System.out.println("              Amusement Park Management System (PurkPulse)           ");
             System.out.println("========================================================================");
             System.out.println("1. Overview Dashboard");
             System.out.println("2. Customer Management");
@@ -57,7 +57,7 @@ public class Main {
                     h_FoodCourtConsole.display(scanner);
                     break;
                 case 6:
-                    StaffConsole.display(scanner);
+                    h_StaffConsole.display(scanner);
                     break;
                 case 7:
                     h_ReportsConsole.display(scanner);

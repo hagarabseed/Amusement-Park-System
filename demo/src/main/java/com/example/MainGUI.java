@@ -107,7 +107,7 @@ public class MainGUI extends JFrame {
     }
 
     private void initData() {
-        park = new y_AmusementPark("Dream Park");
+        park = new y_AmusementPark("ParkPulse");
 
         // Food & Drinks
         park.addFoodItem(new y_Food(1, "Burger Meal", 150, "Fast Food"));
@@ -142,7 +142,7 @@ public class MainGUI extends JFrame {
     }
 
     private void setupFrame() {
-        setTitle("🎢 Dream Park Management System");
+        setTitle("🎢 ParkPulse Management System");
         setSize(1280, 780);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -155,7 +155,7 @@ public class MainGUI extends JFrame {
         sidebar.setPreferredSize(new Dimension(250, 0));
         sidebar.setBorder(BorderFactory.createEmptyBorder(20, 15, 20, 15));
 
-        JLabel logoLabel = new JLabel("DREAM PARK", SwingConstants.CENTER);
+        JLabel logoLabel = new JLabel("ParkPulse", SwingConstants.CENTER);
         logoLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
         logoLabel.setForeground(new Color(0, 191, 255));
         logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

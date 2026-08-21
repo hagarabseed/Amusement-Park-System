@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class StaffConsole {
+public class h_StaffConsole {
     private static Map<Integer, String> shiftStatus = new HashMap<>();
     private static Map<Integer, String> stations = new HashMap<>();
 
