@@ -131,14 +131,6 @@ com.example
 │   ├── KidsRide.java              # Soft boundaries and height safeties
 │   └── WaterRide.java             # Splashing intensity and flume configurations
 │
-├── Ticketing & Booking
-│   ├── Ticket.java (Abstract)     # Base pricing calculations
-│   ├── RegularTicket.java         # Base admission rate handler
-│   ├── VIPTicket.java             # VIP admission including FastPass add-on
-│   ├── FamilyTicket.java          # Bulk group bundle discounts
-│   ├── Booking.java               # Historical booking aggregations
-│   └── Payment.java               # Process controller integrating payment strategies
-│
 ├── Food Court & Offers
 │   ├── FoodItem.java (Abstract)   # Base food cost models
 │   ├── Food.java                  # Fast food configurations
