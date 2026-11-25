@@ -1,0 +1,124 @@
+{
+  "info": {
+    "name": "ParkPulse Web API QA Suite",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/api/v1" },
+    { "key": "jwtToken", "value": "" },
+    { "key": "createdCustomerId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Login as Manager",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200 OK', () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.expect(json.token).to.be.a('string');",
+              "pm.collectionVariables.set('jwtToken', json.token);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\":\"omar.manager@parkpulse.com\",\"password\":\"Pass@1234\"}"
+        }
+      }
+    },
+    {
+      "name": "2. Register Customer (Positive)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 201 Created', () => pm.response.to.have.status(201));",
+              "const json = pm.response.json();",
+              "pm.expect(json.loyaltyPoints).to.eql(10);",
+              "pm.collectionVariables.set('createdCustomerId', json.id);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+        ],
+        "url": "{{baseUrl}}/customers",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"fullName\":\"QA Tester\",\"email\":\"qa.{{$timestamp}}@parkpulse.com\",\"phone\":\"010{{$randomInt}}\",\"initialDeposit\":100.00}"
+        }
+      }
+    },
+    {
+      "name": "3. Issue Ticket with Promo (Positive)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 201 Created', () => pm.response.to.have.status(201));",
+              "const json = pm.response.json();",
+              "pm.expect(json.netAmount).to.eql(40.00);",
+              "pm.expect(json.updatedBalance).to.eql(60.00);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+        ],
+        "url": "{{baseUrl}}/pos/tickets",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"customerId\":{{createdCustomerId}},\"passType\":\"REGULAR\",\"paymentMethod\":\"WRISTBAND\",\"promoCode\":\"SUMMER20\"}"
+        }
+      }
+    },
+    {
+      "name": "4. Insufficient Balance Rejection (Negative)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 422 Unprocessable Entity', () => pm.response.to.have.status(422));",
+              "pm.expect(pm.response.json().detail).to.include('Insufficient wristband balance');"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+        ],
+        "url": "{{baseUrl}}/pos/tickets",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"customerId\":{{createdCustomerId}},\"passType\":\"FAMILY\",\"paymentMethod\":\"WRISTBAND\"}"
+        }
+      }
+    }
+  ]
+}

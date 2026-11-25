@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: parkpulse-db
+    environment:
+      POSTGRES_DB: ${DB_NAME:-parkpulse}
+      POSTGRES_USER: ${DB_USERNAME:-parkpulse_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-parkpulse_dev_pass}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-parkpulse_user} -d ${DB_NAME:-parkpulse}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
