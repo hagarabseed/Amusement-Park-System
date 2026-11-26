@@ -1,4 +1,3 @@
-// ParkTransaction.java & AuditLog.java
 package com.parkpulse.domain;
 
 import jakarta.persistence.*;
@@ -20,25 +19,32 @@ public class ParkTransaction {
     @JoinColumn(name = "offer_id")
     private Offer offer;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "processed_by_id")
+    private StaffUser processedBy;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "tx_type", nullable = false)
+    @Column(name = "tx_type", nullable = false, length = 20)
     private TransactionType txType;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "payment_method", nullable = false)
+    @Column(name = "payment_method", nullable = false, length = 20)
     private PaymentMethod paymentMethod;
 
-    @Column(name = "gross_amount", nullable = false)
+    @Column(name = "gross_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal grossAmount;
 
-    @Column(name = "discount_amount", nullable = false)
+    @Column(name = "discount_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal discountAmount = BigDecimal.ZERO;
 
-    @Column(name = "net_amount", nullable = false)
+    @Column(name = "net_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal netAmount;
 
     @Column(name = "points_earned", nullable = false)
     private int pointsEarned;
+
+    @Column(name = "reference_note", length = 255)
+    private String referenceNote;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -48,6 +54,8 @@ public class ParkTransaction {
     public void setCustomer(Customer customer) { this.customer = customer; }
     public Offer getOffer() { return offer; }
     public void setOffer(Offer offer) { this.offer = offer; }
+    public StaffUser getProcessedBy() { return processedBy; }
+    public void setProcessedBy(StaffUser processedBy) { this.processedBy = processedBy; }
     public TransactionType getTxType() { return txType; }
     public void setTxType(TransactionType txType) { this.txType = txType; }
     public PaymentMethod getPaymentMethod() { return paymentMethod; }
@@ -60,5 +68,7 @@ public class ParkTransaction {
     public void setNetAmount(BigDecimal netAmount) { this.netAmount = netAmount; }
     public int getPointsEarned() { return pointsEarned; }
     public void setPointsEarned(int pointsEarned) { this.pointsEarned = pointsEarned; }
+    public String getReferenceNote() { return referenceNote; }
+    public void setReferenceNote(String referenceNote) { this.referenceNote = referenceNote; }
     public LocalDateTime getCreatedAt() { return createdAt; }
 }

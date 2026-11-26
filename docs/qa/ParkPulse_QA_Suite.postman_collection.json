@@ -6,7 +6,9 @@
   "variable": [
     { "key": "baseUrl", "value": "http://localhost:8080/api/v1" },
     { "key": "jwtToken", "value": "" },
-    { "key": "createdCustomerId", "value": "" }
+    { "key": "operatorToken", "value": "" },
+    { "key": "createdCustomerId", "value": "" },
+    { "key": "issuedTicketCode", "value": "" }
   ],
   "item": [
     {
@@ -19,6 +21,7 @@
               "pm.test('Status is 200 OK', () => pm.response.to.have.status(200));",
               "const json = pm.response.json();",
               "pm.expect(json.token).to.be.a('string');",
+              "pm.expect(json.role).to.eql('MANAGER');",
               "pm.collectionVariables.set('jwtToken', json.token);"
             ],
             "type": "text/javascript"
@@ -36,7 +39,26 @@
       }
     },
     {
-      "name": "2. Register Customer (Positive)",
+      "name": "2. Unauthenticated Request Rejected (401)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 401 Unauthorized', () => pm.response.to.have.status(401));",
+              "pm.expect(pm.response.json().title).to.eql('Unauthorized');"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/customers"
+      }
+    },
+    {
+      "name": "3. Register Customer (Positive)",
       "event": [
         {
           "listen": "test",
@@ -65,7 +87,7 @@
       }
     },
     {
-      "name": "3. Issue Ticket with Promo (Positive)",
+      "name": "4. Issue Ticket with Promo (Positive)",
       "event": [
         {
           "listen": "test",
@@ -74,7 +96,9 @@
               "pm.test('Status is 201 Created', () => pm.response.to.have.status(201));",
               "const json = pm.response.json();",
               "pm.expect(json.netAmount).to.eql(40.00);",
-              "pm.expect(json.updatedBalance).to.eql(60.00);"
+              "pm.expect(json.updatedBalance).to.eql(60.00);",
+              "pm.expect(json.ticketCode).to.match(/^PKP-/);",
+              "pm.collectionVariables.set('issuedTicketCode', json.ticketCode);"
             ],
             "type": "text/javascript"
           }
@@ -94,7 +118,7 @@
       }
     },
     {
-      "name": "4. Insufficient Balance Rejection (Negative)",
+      "name": "5. Insufficient Balance Rejection (Negative)",
       "event": [
         {
           "listen": "test",
@@ -117,6 +141,103 @@
         "body": {
           "mode": "raw",
           "raw": "{\"customerId\":{{createdCustomerId}},\"passType\":\"FAMILY\",\"paymentMethod\":\"WRISTBAND\"}"
+        }
+      }
+    },
+    {
+      "name": "6. Login as Ride Operator",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200 OK', () => pm.response.to.have.status(200));",
+              "pm.collectionVariables.set('operatorToken', pm.response.json().token);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\":\"ahmed.operator@parkpulse.com\",\"password\":\"Pass@1234\"}"
+        }
+      }
+    },
+    {
+      "name": "7. Ride Operator Blocked from Customer POS (403 RBAC)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 403 Forbidden', () => pm.response.to.have.status(403));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{operatorToken}}" }],
+        "url": "{{baseUrl}}/customers"
+      }
+    },
+    {
+      "name": "8. Ride Boarding Safety BVA Rejection (422)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 422 Unprocessable Entity', () => pm.response.to.have.status(422));",
+              "pm.expect(pm.response.json().detail).to.include('Minimum age');"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{operatorToken}}" }
+        ],
+        "url": "{{baseUrl}}/rides/1/board",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"ticketCode\":\"{{issuedTicketCode}}\",\"guestAge\":13,\"guestHeightM\":1.55}"
+        }
+      }
+    },
+    {
+      "name": "9. Ride Boarding Exact Boundary Success (201)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 201 Created', () => pm.response.to.have.status(201));",
+              "pm.expect(pm.response.json().ticketCode).to.eql(pm.collectionVariables.get('issuedTicketCode'));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{operatorToken}}" }
+        ],
+        "url": "{{baseUrl}}/rides/1/board",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"ticketCode\":\"{{issuedTicketCode}}\",\"guestAge\":14,\"guestHeightM\":1.40}"
         }
       }
     }

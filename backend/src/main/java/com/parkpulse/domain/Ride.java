@@ -1,4 +1,3 @@
-// Ride.java (Refactored from s_Ride hierarchy)
 package com.parkpulse.domain;
 
 import jakarta.persistence.*;
@@ -11,11 +10,11 @@ public class Ride {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 120)
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 40)
     private RideCategory category;
 
     @Column(nullable = false)
@@ -24,20 +23,26 @@ public class Ride {
     @Column(name = "min_age", nullable = false)
     private int minAge;
 
-    @Column(name = "min_height_m", nullable = false)
+    @Column(name = "min_height_m", nullable = false, precision = 4, scale = 2)
     private BigDecimal minHeightM;
 
     @Column(name = "need_maintenance", nullable = false)
     private boolean needMaintenance = false;
 
-    @Column(name = "specific_details")
+    @Column(name = "maintenance_reason", length = 255)
+    private String maintenanceReason;
+
+    @Column(name = "specific_details", length = 255)
     private String specificDetails;
+
+    @Version
+    @Column(nullable = false)
+    private Long version = 0L;
 
     public boolean isOperational() {
         return !needMaintenance;
     }
 
-    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getName() { return name; }
@@ -52,6 +57,9 @@ public class Ride {
     public void setMinHeightM(BigDecimal minHeightM) { this.minHeightM = minHeightM; }
     public boolean isNeedMaintenance() { return needMaintenance; }
     public void setNeedMaintenance(boolean needMaintenance) { this.needMaintenance = needMaintenance; }
+    public String getMaintenanceReason() { return maintenanceReason; }
+    public void setMaintenanceReason(String maintenanceReason) { this.maintenanceReason = maintenanceReason; }
     public String getSpecificDetails() { return specificDetails; }
     public void setSpecificDetails(String specificDetails) { this.specificDetails = specificDetails; }
+    public Long getVersion() { return version; }
 }

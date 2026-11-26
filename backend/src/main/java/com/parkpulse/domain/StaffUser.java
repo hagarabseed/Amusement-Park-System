@@ -1,4 +1,3 @@
-// StaffUser.java (Refactored from m_Person, m_Manager, m_Cashier, m_RideOperator)
 package com.parkpulse.domain;
 
 import jakarta.persistence.*;
@@ -11,34 +10,38 @@ public class StaffUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name", nullable = false, length = 120)
     private String fullName;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(name = "password_hash", nullable = false)
+    @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String phone;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private Role role;
 
-    @Column(name = "assigned_station", nullable = false)
+    @Column(name = "assigned_station", nullable = false, length = 100)
     private String assignedStation;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_ride_id")
+    private Ride assignedRide;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "duty_status", nullable = false)
+    @Column(name = "duty_status", nullable = false, length = 20)
     private DutyStatus dutyStatus = DutyStatus.ON_DUTY;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal salary;
 
-    // Getters & Setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public String getFullName() { return fullName; }
     public void setFullName(String fullName) { this.fullName = fullName; }
     public String getEmail() { return email; }
@@ -51,6 +54,8 @@ public class StaffUser {
     public void setRole(Role role) { this.role = role; }
     public String getAssignedStation() { return assignedStation; }
     public void setAssignedStation(String assignedStation) { this.assignedStation = assignedStation; }
+    public Ride getAssignedRide() { return assignedRide; }
+    public void setAssignedRide(Ride assignedRide) { this.assignedRide = assignedRide; }
     public DutyStatus getDutyStatus() { return dutyStatus; }
     public void setDutyStatus(DutyStatus dutyStatus) { this.dutyStatus = dutyStatus; }
     public BigDecimal getSalary() { return salary; }
