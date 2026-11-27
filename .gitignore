@@ -1,6 +1,7 @@
 .env
 backend/target/
 frontend/node_modules/
+park_web/node_modules
 frontend/dist/
 frontend/test-results/
 frontend/playwright-report/
